@@ -1,0 +1,88 @@
+from collections import deque
+
+class Node:
+   def __init__(self, data):
+      self.left = None
+      self.right = None
+      self.data = data
+
+   def insert(self, data):
+
+      if self.data:
+        if data < self.data:
+            if self.left is None:
+               self.left = Node(data)
+            else:
+               self.left.insert(data)
+
+        if data > self.data:
+               if self.right is None:
+                  self.right = Node(data)
+               else:
+                  self.right.insert(data)
+      else:
+         self.data = data
+
+   def mostrar(self):
+      if self.left:
+         self.left.mostrar()
+      print( self.data),
+      if self.right:
+         self.right.mostrar()
+
+
+def print_tree(root):
+        nodes = [root]
+        while nodes:
+            next_nodes = []
+            for node in nodes:
+                if node:
+                    print(node.data, end=' ')
+                    next_nodes.append(node.left)
+                    next_nodes.append(node.right)
+            print()
+            nodes = next_nodes
+
+def insertValues(initial_state, goal_state):
+   arbol = Node(initial_state)
+   arbol.insert(2)
+   arbol.insert(1)
+   arbol.insert(3)
+   arbol.insert(4)
+   arbol.insert(7)
+   arbol.insert(6)
+   arbol.insert(goal_state)
+   arbol.insert(12)
+   return arbol
+
+def move(queue):
+    current_node = queue.popleft()
+    if current_node:
+        print(current_node.data)
+        queue.append(current_node.left)
+        queue.append(current_node.right)
+        return queue, current_node.data
+    else:
+        return queue, None
+
+def test_function(node_data, goal_state):
+   if node_data == goal_state:
+      return True
+   return False
+
+def bfs(initial_state, goal_state, actions):
+    arbol = insertValues(initial_state, goal_state)
+    queue = deque([arbol]) #trabajar con queue, dequeue es doble cola
+    node_data = 0
+    while queue and test_function(node_data, goal_state) != True:
+      if actions == "move":
+         queue, node_data = move(queue)
+
+initial_state = 5
+goal_state = 10
+actions = "move"
+bfs(initial_state, goal_state, actions)
+print("")
+#arbol.mostrar()
+print_tree(insertValues(initial_state, goal_state))
+#bfs(arbol)

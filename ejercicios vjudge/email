@@ -1,0 +1,51 @@
+#Nicolas Cari Rodriguez
+
+import sys
+from queue import PriorityQueue
+
+input = sys.stdin.buffer.readline
+
+def dijkstra(start, finish, graph):
+    distances = {node: float('inf') for node in graph}
+    distances[start] = 0
+
+    priority_queue = PriorityQueue()
+    priority_queue.put((0, start))
+    visited = set([]) 
+
+    while not priority_queue.empty():
+        distance, node = priority_queue.get()
+        
+        if(node not in visited):
+            visited.add(node)
+            for neighbor, value in graph[node]:
+                new_distance = distance + value
+                if (new_distance < distances[neighbor]):
+                    distances[neighbor] = new_distance
+                    priority_queue.put((new_distance, neighbor))
+
+
+    if distances[finish] == float('inf'):
+        return "unreachable"
+    else:
+        return distances[finish]
+
+graph = {}
+cases = int(input())
+for case in range(cases):
+    server, lines, start, finish = list(map(int, input().split()))
+    for _ in range(lines):
+        node1, node2, value = list(map(int, input().split()))
+        if(node1 not in graph):
+            graph[node1] = []
+        graph[node1].append((node2,value))
+        if(node2 not in graph):
+            graph[node2] = []
+        graph[node2].append((node1,value))
+    if(len(graph)!=0):
+        answer = dijkstra(start,finish,graph)
+        print("Case #",case+1,": ",answer, sep='')
+    else:
+        print("Case #",case+1,": unreachable", sep='')
+    graph = {}
+   

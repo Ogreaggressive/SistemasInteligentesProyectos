@@ -1,0 +1,29 @@
+from queue import PriorityQueue
+
+def dijkstra(initialstate, goalstate, actions):
+
+    distances = {}
+    distances[initialstate] = 0
+
+    open = PriorityQueue()
+    open.put((0, initialstate))
+    visited = set([]) 
+
+    while not open.empty():
+        distance, node = open.get()
+        if node == goalstate:
+            return distances[node]
+			
+        if(node not in visited):
+            visited.add(node)
+            for action in actions:
+                neighbor = TF(node, action)
+                value = neighbor.value
+                new_distance = distance + value
+                if neighbor not in distances or new_distance < distances[neighbor]:
+                    distances[neighbor] = new_distance
+                    open.put((new_distance, neighbor))
+
+
+    return "unreachable"
+

@@ -1,0 +1,5 @@
+https://github.com/DwijanX/Genetic-alg
+https://github.com/DwijanX/CuatelaInteligente
+https://github.com/DwijanX/BayesianNetworksLeagueOfLegends
+https://github.com/DwijanX/scenarioDetection
+https://github.com/DwijanX/Harry-Potter-Problem-Reinforcement-Learning
